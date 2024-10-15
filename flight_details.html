@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Flight Details</h1>
+        <nav>
+            <a href="{{ url_for('search_flights') }}">Search Flights</a>
+            <a href="{{ url_for('index') }}">Home</a>
+        </nav>
+    </header>
+    <main>
+        {% if flight %}
+            <h2>Flight ID: {{ flight[0] }}</h2>
+            <p><strong>Origin:</strong> {{ flight[1] }}</p>
+            <p><strong>Destination:</strong> {{ flight[2] }}</p>
+            <p><strong>Date:</strong> {{ flight[3] }}</p>
+            <p><strong>Seats Available:</strong> {{ flight[4] }}</p>
+            <!-- Add additional details here as needed -->
+        {% else %}
+            <p>No details found for this flight.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

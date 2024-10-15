@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Flight</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Book Your Flight</h1>
+    </header>
+    <main>
+        <form id="booking-form">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <input type="hidden" id="flight-id" value="{{ flight_id }}"> <!-- Populate flight ID -->
+
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </main>
+    <script>
+        document.getElementById('booking-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const flightId = document.getElementById('flight-id').value;
+
+            const response = await fetch('/book_flight', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    flight_id: flightId
+                }),
+            });
+
+            const result = await response.json();
+            // Redirect to payment page or show confirmation based on result
+            window.location.href = `/payment/${result.reservation_id}`;
+        });
+    </script>
+</body>
+</html>
